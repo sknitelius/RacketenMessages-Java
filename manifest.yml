@@ -6,6 +6,6 @@ applications:
 - name: racketenMessages
   instances: 1
   memory: 512M
-  path: target/RacketenMessages.war
+  path: RacketenMessages-web/target/RacketenMessages.war
   services:
     - messagesDB
