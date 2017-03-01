@@ -1,11 +1,11 @@
-declared-services:
-  messagesDB:
-    label: elephantsql
-    plan: turtle
+#declared-services:
+#  messagesDB:
+#    label: elephantsql
+#    plan: turtle
 applications:
 - name: racketenMessages
   instances: 1
   memory: 512M
   path: /target/RacketenMessages.war
-  services:
-    - messagesDB
+#  services:
+#    - messagesDB
