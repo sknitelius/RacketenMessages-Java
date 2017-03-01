@@ -1,8 +1,8 @@
-package com.knitelius.interconnect;
+package com.knitelius.raketenmessages;
 
 import java.util.List;
 
-import com.knitelius.interconnect.model.Message;
+import com.knitelius.racketenmessages.model.Message;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

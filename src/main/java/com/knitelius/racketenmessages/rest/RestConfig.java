@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.knitelius.interconnect.rest;
+package com.knitelius.racketenmessages.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

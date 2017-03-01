@@ -1,4 +1,4 @@
-package com.knitelius.interconnect;
+package com.knitelius.raketenmessages;
 
 import static org.junit.Assert.*;
 
@@ -7,14 +7,17 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
-import com.knitelius.interconnect.model.Message;
+import com.knitelius.racketenmessages.model.Message;
+import com.knitelius.raketenmessages.testcategory.Smoke;
 
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@Category(Smoke.class)
 public class SmokeTest {
 
 	private static MessageClientTestService service;
