@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 sknitelius.
+ * Copyright 2017 Stephan Knitelius.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import javax.ws.rs.core.Application;
  *
  * @author sknitelius
  */
-@ApplicationPath("/")
+@ApplicationPath("/api")
 public class RestConfig extends Application {
     
 }

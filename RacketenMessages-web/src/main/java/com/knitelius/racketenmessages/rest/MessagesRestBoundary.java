@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 sknitelius.
+ * Copyright 2017 Stephan Knitelius.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,24 @@
 package com.knitelius.racketenmessages.rest;
 
 import java.util.List;
+
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import com.knitelius.racketenmessages.model.Message;
+import com.knitelius.racketenmessages.service.MessageService;
 
 /**
  *
@@ -46,31 +49,39 @@ import com.knitelius.racketenmessages.model.Message;
  */
 @Path("message")
 @Stateless
-public class MessagesBoundary {
+public class MessagesRestBoundary {
     
-    @PersistenceContext(unitName = "message-pu")
-    private EntityManager em;
+    @Inject
+    private MessageService messageService;
     
     @GET
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Message> messages() {
-        Query createQuery = em.createQuery("SELECT e FROM Message e");
-        return createQuery.getResultList();
+    public Response messages() {
+    	List<Message> messages = messageService.loadAll();
+    	return Response.ok(messages, MediaType.APPLICATION_JSON).build();
     }
     
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Message message(@PathParam("id") Long id) {
-        return em.find(Message.class, id);
+    public Response message(@PathParam("id") Long id) {
+        Message message = messageService.find(id);
+        if(message == null) {
+        	return Response.status(Status.NOT_FOUND).build();
+        }
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
     }
     
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Message addMessage(Message message) {
-        return em.merge(message);
+    public Response addMessage(Message message, @Context UriInfo uriInfo) {
+        Message insertedMsg = messageService.insert(message);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(Long.toString(insertedMsg.getId()));
+		return Response.created(builder.build()).build();
     }
     
 }
