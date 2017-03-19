@@ -45,39 +45,38 @@ import com.knitelius.racketenmessages.service.MessageService;
 
 @Path("message")
 @Stateless
-public class MessagesRestBoundary {
-    
-    @Inject
-    private MessageService messageService;
-    
-    @GET
-    @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response messages() {
-    	List<Message> messages = messageService.loadAll();
-    	return Response.ok(messages, MediaType.APPLICATION_JSON).build();
-    }
-    
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response message(@PathParam("id") Long id) {
-        Message message = messageService.find(id);
-        if(message == null) {
-        	return Response.status(Status.NOT_FOUND).build();
-        }
+public class MessagesController {
+
+	@Inject
+	private MessageService messageService;
+
+	@GET
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response messages() {
+		List<Message> messages = messageService.loadAll();
+		return Response.ok(messages, MediaType.APPLICATION_JSON).build();
+	}
+
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response message(@PathParam("id") Long id) {
+		Message message = messageService.find(id);
+		if (message == null) {
+			return Response.status(Status.NOT_FOUND).build();
+		}
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
-    }
-    
-    
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addMessage(Message message, @Context UriInfo uriInfo) {
-        Message insertedMsg = messageService.insert(message);
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-        builder.path(Long.toString(insertedMsg.getId()));
+	}
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addMessage(Message message, @Context UriInfo uriInfo) {
+		Message insertedMsg = messageService.insert(message);
+		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+		builder.path(Long.toString(insertedMsg.getId()));
 		return Response.created(builder.build()).build();
-    }
-    
+	}
+
 }
