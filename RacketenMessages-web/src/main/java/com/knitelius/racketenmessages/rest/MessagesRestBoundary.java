@@ -43,10 +43,6 @@ import javax.ws.rs.core.UriInfo;
 import com.knitelius.racketenmessages.model.Message;
 import com.knitelius.racketenmessages.service.MessageService;
 
-/**
- *
- * @author sknitelius
- */
 @Path("message")
 @Stateless
 public class MessagesRestBoundary {
