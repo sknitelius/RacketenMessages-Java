@@ -60,23 +60,20 @@ public class SmokeTest {
 		message.setMsg(String.format("Current time %s", LocalDateTime.now()));
 		message.setUsr("smocker");
 		
-		//Call<Message> storeMessgeRequest = service.saveMessage(message);		
-		//Response<Message> storeMessageResponse = storeMessgeRequest.execute();
-		//assertTrue(storeMessageResponse.isSuccessful());
+		Call<Message> storeMessgeRequest = service.saveMessage(message);		
+		Response<Message> storeMessageResponse = storeMessgeRequest.execute();
+		assertTrue(storeMessageResponse.isSuccessful());
 		
-		Call<ResponseBody> saveMessageRequest = service.saveMessage(message);
-		Response<ResponseBody> saveMessageResponse = saveMessageRequest.execute();
-		System.out.println(saveMessageResponse.headers().get("location"));
 		
-		//Long id = storeMessageResponse.body().getId();
-//		Call<Message> messageRequest = service.getMessage(id);
-//		Response<Message> messageResponse = messageRequest.execute();
-//		assertTrue(messageResponse.isSuccessful());
-//		assertEquals(id, messageResponse.body().getId());
-//		
-//		Call<List<Message>> allMessagesRequest = service.getAllMessages();
-//		Response<List<Message>> allMessagesResponse = allMessagesRequest.execute();
-//		assertTrue(!allMessagesResponse.body().isEmpty());
-//		assertTrue(allMessagesResponse.body().contains(messageResponse.body()));
+		Long id = storeMessageResponse.body().getId();
+		Call<Message> messageRequest = service.getMessage(id);
+		Response<Message> messageResponse = messageRequest.execute();
+		assertTrue(messageResponse.isSuccessful());
+		assertEquals(id, messageResponse.body().getId());
+
+		Call<List<Message>> allMessagesRequest = service.getAllMessages();
+		Response<List<Message>> allMessagesResponse = allMessagesRequest.execute();
+		assertTrue(!allMessagesResponse.body().isEmpty());
+		assertTrue(allMessagesResponse.body().contains(messageResponse.body()));
 	}
 }

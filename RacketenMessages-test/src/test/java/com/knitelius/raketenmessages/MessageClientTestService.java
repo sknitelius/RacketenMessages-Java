@@ -27,9 +27,7 @@ import java.util.List;
 
 import com.knitelius.racketenmessages.model.Message;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
@@ -39,7 +37,7 @@ public interface MessageClientTestService {
 	@GET("api/message/all")
 	Call<List<Message>> getAllMessages();
 	@PUT("api/message")
-	Call<ResponseBody> saveMessage(@Body Message message);
+	Call<Message> saveMessage(@Body Message message);
 	@GET("api/message/{id}")
 	Call<Message> getMessage(@Path("id")long id);
 }

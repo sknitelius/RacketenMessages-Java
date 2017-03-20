@@ -25,10 +25,6 @@ package com.knitelius.racketenmessages.model;
 
 import java.io.Serializable;
 
-/**
- *
- * @author sknitelius
- */
 public class Message implements Serializable {
     
     private Long id;
